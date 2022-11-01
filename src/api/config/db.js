@@ -2,7 +2,6 @@
 import { faker } from '@faker-js/faker';
 
 // Creates and array of JSON User data.
-
 function UserDB() {
     // Array which stores user data
     let users = [];
@@ -22,5 +21,5 @@ function UserDB() {
     return users;
 }
 
-UserDB()
 
+export default UserDB;
