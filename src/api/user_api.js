@@ -1,5 +1,5 @@
-import UserDB from "../config/db.js";
-import {delay,returnStatus} from "../helper/helper.js";
+import UserDB from "./config/db.js";
+import {delay,returnStatus} from "./helper/helper.js";
 
 
 let users = UserDB()
@@ -52,7 +52,6 @@ const updateUser = (id, data) => {
     }
     else {
         users[id] = {...users[id],...data};
-        console.log(users)
         return {data:returnStatus("success")}
     }
     
@@ -66,16 +65,16 @@ const deleteUser = (id) =>{
     }
     else {
         users = users.filter((obj)=> obj.id !== id)
-        console.log(users)
         return {data:returnStatus("success")}
     }
 
 }
 
 //Logic to login user
-const loginUser = (id) => {
+const loginUser = (email) => {
+  const id = users.find(user => user.email===email) || 1;
     if (!users[id]){
-        throw new Error("User does not exist.")
+      throw new Error("User does not exist.")
     }
     else {
         return {
@@ -151,10 +150,10 @@ const doDeleteUser = async(id) => {
       }
 }
 
-const doLoginUser = async () => {
+const doLoginUser = async (id) => {
     try {
         await delay(1000);
-        const result = await loginUser();
+        const result = await loginUser(id);
         console.log(result);
       } catch (error) {
         await delay(1000)
@@ -168,4 +167,4 @@ export {doGetUsers,
         doCreateUser,
         doUpdateUser,
         doDeleteUser,
-        loginUser};
+        doLoginUser};
